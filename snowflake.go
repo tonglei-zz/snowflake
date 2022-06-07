@@ -138,17 +138,18 @@ func (n *Node) Generate() ID {
 
 	now := time.Since(n.epoch).Nanoseconds() / 1000000
 
+	n.step = (n.step + 1) & n.stepMask
 	if now == n.time {
-		n.step = (n.step + 1) & n.stepMask
-
+		// n.step = (n.step + 1) & n.stepMask
 		if n.step == 0 {
 			for now <= n.time {
 				now = time.Since(n.epoch).Nanoseconds() / 1000000
 			}
 		}
-	} else {
-		n.step = 0
 	}
+	// else {
+	// 	n.step = 0
+	// }
 
 	n.time = now
 
